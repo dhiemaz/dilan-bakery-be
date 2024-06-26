@@ -3,13 +3,13 @@ const userModel = require("../models/userModel.js");
 const Stripe = require("stripe");
 
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const frontend_url = process.env.FRONTEND_URL;
 
 //user order buat frontend
 const placeOrder = async (req, res) => {
 
-    const frontend_url = "http://localhost:5173";
-
+    //const frontend_url = "https://dilan-bakery-fe.vercel.app/";
     try {
         const newOrder = new orderModel({
             userId: req.body.userId,
