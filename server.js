@@ -11,7 +11,7 @@ const port = 4000
 
 // Use the CORS middleware
 app.use(cors({
-    origin: 'https://dilan-bakery-admin.vercel.app', // Allow only your frontend origin
+    origin: ['https://dilan-bakery-admin.vercel.app','https://dilan-bakery-fe.vercel.app'], // Allow only your frontend origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
     allowedHeaders: ['Content-Type', 'Authorization'] // Specify the headers you want to allow
 }));
