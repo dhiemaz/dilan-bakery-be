@@ -1,6 +1,11 @@
-import orderModel from "../models/orderModel.js";
-import userModel from "../models/userModel.js"
-import Stripe from "stripe"
+// import orderModel from "../models/orderModel.js";
+// import userModel from "../models/userModel.js"
+// import Stripe from "stripe"
+
+const orderModel = require("../models/orderModel.js");
+const userModel = require("../models/userModel.js");
+const Stripe = require("stripe");
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -26,7 +31,7 @@ const placeOrder = async (req, res) => {
                 product_data: {
                     name: item.name
                 },
-                unit_amount:item.price*100*10
+                unit_amount: item.price * 100 * 10
             },
             quantity: item.quantity
         }))
@@ -43,19 +48,19 @@ const placeOrder = async (req, res) => {
         })
 
         const session = await stripe.checkout.sessions.create({
-            line_items:line_items,
-            mode:'payment',
-            success_url:`${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-            cancel_url:`${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
+            line_items: line_items,
+            mode: 'payment',
+            success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
+            cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
         })
 
-        res.json({success:true,session_url:session.url})
+        res.json({ success: true, session_url: session.url })
 
     } catch (error) {
         console.log(error);
-        res.json({success:false,message:"Error"})
+        res.json({ success: false, message: "Error" })
 
     }
 }
 
-export { placeOrder }
+module.exports = { placeOrder }
