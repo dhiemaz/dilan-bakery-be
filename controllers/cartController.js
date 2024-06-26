@@ -1,4 +1,3 @@
-// import userModel from "../models/userModel.js"
 const userModel = require("../models/userModel.js");
 
 //add items to cart user
@@ -55,5 +54,3 @@ const getCart = async (req, res) => {
 }
 
 module.exports = { addToCart, removeFromCart, getCart }
-
-// export { addToCart, removeFromCart, getCart }

@@ -1,7 +1,3 @@
-// import orderModel from "../models/orderModel.js";
-// import userModel from "../models/userModel.js"
-// import Stripe from "stripe"
-
 const orderModel = require("../models/orderModel.js");
 const userModel = require("../models/userModel.js");
 const Stripe = require("stripe");
