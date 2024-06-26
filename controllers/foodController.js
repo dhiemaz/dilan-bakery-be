@@ -11,10 +11,13 @@ cloudinary.config({
 //add food item
 const addFood = async (req, res) => {
 
-    // Upload image to Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path , {
-        folder:'folder_name'
-     });
+    // Upload image to Cloudinary using buffer
+    const result = await cloudinary.uploader.upload_stream({ folder: 'folder_name' }, (error, result) => {
+        if (error) {
+            throw error;
+        }
+        return result;
+    }).end(req.file.buffer);
 
     let image_filename = result.secure_url;
 
