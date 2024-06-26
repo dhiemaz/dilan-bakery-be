@@ -9,10 +9,12 @@ const orderRouter = require("./routes/orderRoute.js")
 const app = express()
 const port = 4000
 
-// const corsOptions = {
-//     origin: ["https://dilan-bakery-admin.vercel.app", "http://localhost:5173"],
-//     optionsSuccessStatus: 200
-// }
+// Use the CORS middleware
+app.use(cors({
+    origin: 'https://dilan-bakery-admin.vercel.app', // Allow only your frontend origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
+    allowedHeaders: ['Content-Type', 'Authorization'] // Specify the headers you want to allow
+}));
 
 //middleware
 app.use(express.json())
