@@ -9,9 +9,14 @@ const orderRouter = require("./routes/orderRoute.js")
 const app = express()
 const port = 4000
 
+const corsOptions = {
+    origin: ["https://dilan-bakery-admin.vercel.app", "http://localhost:5173"],
+    optionsSuccessStatus: 200
+}
+
 //middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors(corsOptions))
 
 //db connection
 connectDB()
