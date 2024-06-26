@@ -13,23 +13,23 @@ const port = 4000
 
 //middleware
 app.use(express.json())
-app.use(cors())
+// app.use(cors())
 
 //db connection
-connectDB();
+//connectDB();
 
 //api endpoint
-app.use("/api/food",foodRouter)
-app.use("/images",express.static('uploads'))
-app.use("/api/user",userRouter)
-app.use ("/api/cart",cartRouter)
-app.use ("/api/order",orderRouter)
+// app.use("/api/food", foodRouter)
+// app.use("/images", express.static('uploads'))
+// app.use("/api/user", userRouter)
+// app.use("/api/cart", cartRouter)
+// app.use("/api/order", orderRouter)
 
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
     res.send("API Working")
 })
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`Server started on port : ${port}`)
 })
