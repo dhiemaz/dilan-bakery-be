@@ -8,34 +8,44 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const uploadImageToCloudinary = (buffer) => {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream((error, result) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(result);
+        });
+        stream.end(buffer);
+    });
+};
+
 //add food item
 const addFood = async (req, res) => {
 
-    // Upload image to Cloudinary using buffer
-    const result = await cloudinary.uploader.upload_stream({ folder: 'folder_name' }, (error, result) => {
-        if (error) {
-            throw error;
-        }
-        return result;
-    }).end(req.file.buffer);
-
-    let image_filename = result.secure_url;
-
-    const food = new foodModel({
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        category: req.body.category,
-        image: image_filename
-    })
+    // Check if file exists
+    if (!req.file) {
+        return res.status(400).json({ success: false, message: 'File is missing' });
+    }
 
     try {
+        const result = await uploadImageToCloudinary(req.file.buffer);
+        let image_filename = result.secure_url;
+
+        const food = new foodModel({
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            category: req.body.category,
+            image: image_filename
+        });
+
         await food.save();
+        console.log("Food Added :", food);
         res.json({ success: true, message: "Food Added" })
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: "Error" })
-
     }
 }
 
